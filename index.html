@@ -11,15 +11,16 @@
   <div class="app-shell">
     <header class="topbar">
       <button class="icon-btn d-none" id="backBtn" aria-label="Volver al menu" title="Menu">
-        <span aria-hidden="true">‹</span>
+        <span aria-hidden="true">&lt;</span>
       </button>
       <div>
         <p class="kicker mb-0">puzzle geometrico</p>
         <h1 class="brand mb-0">Triangulum</h1>
       </div>
       <div class="top-actions">
-        <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema" title="Tema">◐</button>
-        <button class="icon-btn" id="soundBtn" aria-label="Sonido" title="Sonido">♪</button>
+        <div class="coin-pill" title="Monedas"><span>$</span><strong id="coinCount">0</strong></div>
+        <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema" title="Tema">T</button>
+        <button class="icon-btn" id="soundBtn" aria-label="Sonido" title="Sonido">S</button>
       </div>
     </header>
 
@@ -63,9 +64,11 @@
             <div class="menu-buttons">
               <button class="btn btn-primary btn-lg" id="playBtn">Jugar</button>
               <button class="btn btn-outline-primary btn-lg" data-screen="levelsScreen">Seleccion de niveles</button>
+              <button class="btn btn-outline-primary btn-lg" data-screen="shopScreen">Tienda</button>
               <button class="btn btn-outline-secondary btn-lg" data-screen="settingsScreen">Configuracion</button>
               <button class="btn btn-outline-secondary btn-lg" data-screen="statsScreen">Estadisticas</button>
             </div>
+            <div class="ad-slot" data-ad-position="menu-bottom"></div>
           </div>
         </div>
       </section>
@@ -76,6 +79,7 @@
           <p>Los niveles infinitos aparecen despues de completar los 30 iniciales.</p>
         </div>
         <div class="level-grid" id="levelGrid"></div>
+        <div class="ad-slot ad-slot-inline" data-ad-position="levels-inline"></div>
       </section>
 
       <section class="screen" id="gameScreen">
@@ -101,6 +105,7 @@
             <button class="btn btn-outline-primary" id="undoBtn">Deshacer</button>
             <button class="btn btn-outline-secondary" id="restartBtn">Reiniciar</button>
             <button class="btn btn-outline-info" id="hintBtn">Pista</button>
+            <button class="btn btn-outline-info" id="rewardHintBtn">Ver anuncio por pista</button>
             <button class="btn btn-outline-dark" data-screen="menuScreen">Menu</button>
             <div class="triangle-list" id="triangleList"></div>
           </aside>
@@ -109,7 +114,7 @@
 
       <section class="screen" id="victoryScreen">
         <div class="victory-card">
-          <div class="success-ring">✓</div>
+          <div class="success-ring">OK</div>
           <p class="kicker">nivel completado</p>
           <h2 id="victoryTitle">Excelente</h2>
           <div class="stars" id="victoryStars"></div>
@@ -118,6 +123,12 @@
             <div><strong id="victoryMoves">0</strong><span>Movimientos</span></div>
             <div><strong id="victoryTriangles">0</strong><span>Triangulos</span></div>
           </div>
+          <div class="reward-strip">
+            <span id="coinRewardText">+0 monedas</span>
+            <button class="btn btn-outline-primary btn-sm" id="doubleRewardBtn">Duplicar recompensa</button>
+            <button class="btn btn-outline-primary btn-sm" id="recoverStarBtn">Recuperar estrella</button>
+          </div>
+          <div class="ad-slot ad-slot-small" data-ad-position="victory-small"></div>
           <div class="victory-actions">
             <button class="btn btn-outline-primary" id="retryBtn">Reintentar</button>
             <button class="btn btn-primary" id="nextBtn">Siguiente nivel</button>
@@ -134,7 +145,21 @@
           <label class="setting-line"><span>Animaciones</span><input class="form-check-input" type="checkbox" id="motionToggle"></label>
           <label class="setting-line"><span>Tema</span><select class="form-select" id="themeSelect"><option value="auto">Automatico</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label>
           <button class="btn btn-danger" id="resetProgressBtn">Reiniciar progreso</button>
+          <div class="ad-slot ad-slot-small" data-ad-position="settings-bottom"></div>
         </div>
+      </section>
+
+      <section class="screen" id="shopScreen">
+        <div class="section-head">
+          <h2>Tienda</h2>
+          <p>Economia local preparada para compras reales, anuncios recompensados y paquetes premium.</p>
+        </div>
+        <div class="shop-summary">
+          <div><strong id="shopCoins">0</strong><span>Monedas</span></div>
+          <div><strong id="shopHints">0</strong><span>Pistas</span></div>
+          <div><strong id="premiumStatus">No</strong><span>Premium</span></div>
+        </div>
+        <div class="shop-grid" id="shopGrid"></div>
       </section>
 
       <section class="screen" id="statsScreen">
@@ -147,8 +172,23 @@
     </main>
   </div>
 
+  <div class="ad-modal-backdrop d-none" id="adModal" role="dialog" aria-modal="true" aria-labelledby="adModalTitle">
+    <div class="ad-modal">
+      <p class="kicker mb-0" id="adModalKind">anuncio simulado</p>
+      <h2 id="adModalTitle">Anuncio de prueba</h2>
+      <p id="adModalText">Aqui aparecera un anuncio real cuando se conecte una plataforma publicitaria.</p>
+      <div class="ad-creative">
+        <span id="adCountdown"></span>
+        <strong>Placeholder Ad</strong>
+        <small>AdSense / AdMob / Unity Ads / AppLovin / IronSource ready</small>
+      </div>
+      <button class="btn btn-primary" id="adContinueBtn">Continuar</button>
+    </div>
+  </div>
+
   <script src="js/geometry.js"></script>
   <script src="js/levels.js"></script>
+  <script src="js/monetization.js"></script>
   <script src="js/game.js"></script>
 </body>
 </html>

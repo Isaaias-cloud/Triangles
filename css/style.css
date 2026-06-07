@@ -29,6 +29,32 @@
   --board: #171b23;
 }
 
+[data-visual-theme="neon"] {
+  --bg: #080b12;
+  --surface: rgba(17, 24, 39, 0.9);
+  --surface-strong: #101827;
+  --text: #f8fbff;
+  --muted: #a6b3c7;
+  --line: rgba(55, 232, 203, 0.22);
+  --primary: #37e8cb;
+  --primary-2: #ff4fd8;
+  --accent: #faff6a;
+  --board: #0d1320;
+}
+
+[data-visual-theme="futuristic"] {
+  --bg: #eef3f8;
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-strong: #ffffff;
+  --text: #1c2430;
+  --muted: #64748b;
+  --line: rgba(0, 84, 166, 0.16);
+  --primary: #0054a6;
+  --primary-2: #00a6a6;
+  --accent: #ffb703;
+  --board: #f8fbff;
+}
+
 * { box-sizing: border-box; }
 
 body {
@@ -65,6 +91,7 @@ button, select, input { font: inherit; }
 }
 .btn:disabled { opacity: 0.55; cursor: not-allowed; }
 .btn-lg { min-height: 52px; font-size: 1.04rem; }
+.btn-sm { min-height: 34px; padding: 0.32rem 0.62rem; font-size: 0.82rem; }
 .btn-outline-secondary { color: var(--muted); border-color: var(--line); }
 .btn-outline-info { color: var(--primary-2); border-color: color-mix(in srgb, var(--primary-2), transparent 35%); }
 .btn-outline-dark { color: var(--text); border-color: var(--line); }
@@ -106,6 +133,30 @@ button, select, input { font: inherit; }
 .brand { font-size: clamp(1.4rem, 3vw, 2.1rem); letter-spacing: 0; font-weight: 800; }
 .kicker { text-transform: uppercase; font-size: 0.73rem; letter-spacing: 0.16em; color: var(--primary-2); font-weight: 800; }
 .top-actions { display: flex; gap: 10px; }
+
+.coin-pill {
+  min-width: 84px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 900;
+}
+
+.coin-pill span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #1b1b1b;
+}
 
 .icon-btn {
   width: 42px;
@@ -174,13 +225,13 @@ button, select, input { font: inherit; }
 .progress { height: 10px; background: color-mix(in srgb, var(--muted), transparent 80%); }
 .progress-bar { width: 0; background: linear-gradient(90deg, var(--primary), var(--primary-2)); transition: width 360ms ease; }
 
-.stats-row, .hud-stats, .victory-stats, .stats-grid {
+.stats-row, .hud-stats, .victory-stats, .stats-grid, .shop-summary {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
-.stats-row div, .hud-stats div, .victory-stats div, .stats-grid div {
+.stats-row div, .hud-stats div, .victory-stats div, .stats-grid div, .shop-summary div {
   min-height: 76px;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--surface-strong), transparent 8%);
@@ -191,8 +242,8 @@ button, select, input { font: inherit; }
   padding: 12px;
 }
 
-.stats-row strong, .hud-stats strong, .victory-stats strong, .stats-grid strong { font-size: 1.45rem; line-height: 1; }
-.stats-row span, .hud-stats span, .victory-stats span, .stats-grid span { color: var(--muted); font-size: 0.82rem; }
+.stats-row strong, .hud-stats strong, .victory-stats strong, .stats-grid strong, .shop-summary strong { font-size: 1.45rem; line-height: 1; }
+.stats-row span, .hud-stats span, .victory-stats span, .stats-grid span, .shop-summary span { color: var(--muted); font-size: 0.82rem; }
 
 .menu-buttons { display: grid; gap: 12px; margin-top: auto; }
 .btn { border-radius: 8px; font-weight: 800; min-height: 44px; }
@@ -226,6 +277,8 @@ button, select, input { font: inherit; }
 .level-tile strong { display: block; font-size: 1.25rem; }
 .level-tile span { color: var(--muted); font-size: 0.82rem; }
 .stars { color: var(--accent); font-size: 1.8rem; letter-spacing: 0.08em; }
+.level-actions { display: flex; gap: 6px; margin-top: 8px; }
+.level-actions .btn { min-height: 32px; padding: 0.25rem 0.45rem; font-size: 0.76rem; }
 
 .game-hud {
   border-radius: 8px;
@@ -324,6 +377,23 @@ button, select, input { font: inherit; }
 .victory-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
 .victory-actions .btn { min-width: 150px; }
 
+.reward-strip {
+  margin: 14px 0 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.reward-strip span {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  padding: 8px 12px;
+  font-weight: 900;
+}
+
 .setting-line {
   display: flex;
   justify-content: space-between;
@@ -337,6 +407,109 @@ button, select, input { font: inherit; }
 }
 
 .setting-line .form-select { max-width: 180px; }
+
+.shop-summary { margin-bottom: 16px; }
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.shop-card {
+  min-height: 210px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 12px 28px rgba(20, 24, 35, 0.08);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shop-card h3 { font-size: 1.1rem; margin: 0; font-weight: 900; }
+.shop-card p { margin: 0; color: var(--muted); }
+.shop-card .btn { margin-top: auto; }
+
+.ad-slot {
+  width: 100%;
+  min-height: 78px;
+  border-radius: 8px;
+  margin-top: 14px;
+}
+
+.ad-slot-inline { margin: 18px 0 0; }
+.ad-slot-small { min-height: 62px; }
+
+.ad-placeholder {
+  min-height: inherit;
+  border: 1px dashed color-mix(in srgb, var(--primary), transparent 35%);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary), transparent 90%), color-mix(in srgb, var(--accent), transparent 90%)),
+    var(--surface);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 10px;
+}
+
+.ad-placeholder span { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 900; }
+.ad-placeholder strong { font-size: 1rem; }
+.ad-placeholder small { color: var(--muted); }
+
+.ad-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(8, 10, 16, 0.62);
+  backdrop-filter: blur(10px);
+}
+
+.ad-modal {
+  width: min(520px, 100%);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-strong);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  text-align: center;
+}
+
+.ad-modal h2 { font-weight: 900; margin: 6px 0 8px; }
+.ad-modal p { color: var(--muted); }
+
+.ad-creative {
+  min-height: 170px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  margin: 18px 0;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary-2), transparent 82%), color-mix(in srgb, var(--primary), transparent 86%)),
+    var(--board);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+}
+
+.ad-creative span {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #191919;
+  font-weight: 900;
+}
+
+.ad-creative small { color: var(--muted); }
 
 .confetti {
   position: fixed;
@@ -379,7 +552,7 @@ button, select, input { font: inherit; }
   .topbar { padding: 12px; }
   .hero-panel { min-height: 430px; padding: 18px; }
   .hero-copy { left: 18px; right: 18px; bottom: 18px; }
-  .stats-row, .hud-stats, .victory-stats, .stats-grid { grid-template-columns: 1fr; }
+  .stats-row, .hud-stats, .victory-stats, .stats-grid, .shop-summary { grid-template-columns: 1fr; }
   .side-panel { grid-template-columns: 1fr; }
   .level-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
